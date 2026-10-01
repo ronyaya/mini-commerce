@@ -67,3 +67,6 @@ jobs:
           REDIS_PORT: 6379
           QUEUE_CONNECTION: redis
         run: php artisan test
+
+      - name: Build Docker image
+        run: docker build -t mini-commerce:test .
