@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Models\Product;
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
-
+use Illuminate\Support\Facades\Redis;
 
 class ProductService
 {
@@ -40,7 +40,7 @@ class ProductService
             }
         }
 
-        if (!$invalidated) {
+        if (! $invalidated) {
             logger()->error('PRODUCT CACHE INVALIDATION FAILED', [
                 'product_id' => $product->id,
             ]);
@@ -63,13 +63,13 @@ class ProductService
             ]);
 
             if ($cached === $nullMarker) {
-                throw (new \Illuminate\Database\Eloquent\ModelNotFoundException())
+                throw (new ModelNotFoundException)
                     ->setModel(Product::class, [$id]);
             }
 
             $data = json_decode($cached, true);
 
-            $product = new Product();
+            $product = new Product;
             $product->setRawAttributes($data);
 
             return $product;
@@ -92,13 +92,13 @@ class ProductService
 
                 if ($cached !== null) {
                     if ($cached === $nullMarker) {
-                        throw (new \Illuminate\Database\Eloquent\ModelNotFoundException())
+                        throw (new ModelNotFoundException)
                             ->setModel(Product::class, [$id]);
                     }
 
                     $data = json_decode($cached, true);
 
-                    $product = new Product();
+                    $product = new Product;
                     $product->setRawAttributes($data);
 
                     return $product;
@@ -111,14 +111,14 @@ class ProductService
 
                 $product = Product::find($id);
 
-                if (!$product) {
+                if (! $product) {
                     Redis::setex(
                         $cacheKey,
                         300,
                         $nullMarker
                     );
 
-                    throw (new \Illuminate\Database\Eloquent\ModelNotFoundException())
+                    throw (new ModelNotFoundException)
                         ->setModel(Product::class, [$id]);
                 }
 
@@ -151,13 +151,13 @@ class ProductService
 
             if ($cached !== null) {
                 if ($cached === $nullMarker) {
-                    throw (new \Illuminate\Database\Eloquent\ModelNotFoundException())
+                    throw (new ModelNotFoundException)
                         ->setModel(Product::class, [$id]);
                 }
 
                 $data = json_decode($cached, true);
 
-                $product = new Product();
+                $product = new Product;
                 $product->setRawAttributes($data);
 
                 return $product;

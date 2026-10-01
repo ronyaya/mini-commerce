@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Inventory;
-use App\Services\InventoryService;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -27,7 +26,7 @@ class OrderService
 
             $order = Order::create([
                 'user_id' => null,
-                'order_number' => 'ORD-' . now()->format('YmdHis'),
+                'order_number' => 'ORD-'.now()->format('YmdHis'),
                 'total_amount' => $subtotal,
                 'status' => 'pending_payment',
             ]);

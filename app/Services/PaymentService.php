@@ -38,7 +38,7 @@ class PaymentService
         try {
             $payment = Payment::create([
                 'order_id' => $order->id,
-                'payment_number' => 'PAY-' . now()->format('YmdHis'),
+                'payment_number' => 'PAY-'.now()->format('YmdHis'),
                 'amount' => $order->total_amount,
                 'status' => 'processing',
                 'idempotency_key' => $idempotencyKey,

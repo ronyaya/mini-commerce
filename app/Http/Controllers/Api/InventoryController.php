@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdjustInventoryRequest;
 use App\Http\Requests\ReserveInventoryRequest;
-use App\Models\Product;
 use App\Models\Inventory;
+use App\Models\Product;
 use App\Services\InventoryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller
 {

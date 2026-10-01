@@ -17,7 +17,7 @@ class FakePaymentGateway implements PaymentGatewayInterface
         if ($this->shouldSucceed) {
             return [
                 'success' => true,
-                'provider_transaction_id' => 'FAKE-' . $paymentNumber,
+                'provider_transaction_id' => 'FAKE-'.$paymentNumber,
             ];
         }
 

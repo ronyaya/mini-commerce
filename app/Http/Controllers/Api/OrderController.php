@@ -9,7 +9,6 @@ use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
 use RuntimeException;
 
-
 class OrderController extends Controller
 {
     public function store(OrderService $orderService): JsonResponse

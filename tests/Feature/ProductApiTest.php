@@ -1,15 +1,15 @@
 <?php
 
-
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Product;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ProductApiTest extends TestCase
 {
     use RefreshDatabase;
+
     public function test_can_get_product_list(): void
     {
         Product::factory()->create([

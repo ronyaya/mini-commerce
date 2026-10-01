@@ -5,9 +5,9 @@ namespace Tests\Feature;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\Warehouse;
+use App\Services\InventoryService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Services\InventoryService;
 
 class InventoryReservationTest extends TestCase
 {

@@ -52,6 +52,9 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
+      - name: Run Pint
+        run: ./vendor/bin/pint --test
+
       - name: Run tests
         env:
           DB_CONNECTION: pgsql

@@ -14,14 +14,15 @@ class PaymentIdempotencyTest extends TestCase
 
     public function test_same_idempotency_key_only_charges_once(): void
     {
-        $order = new Order();
+        $order = new Order;
         $order->user_id = null;
         $order->order_number = 'ORD-TEST-001';
         $order->total_amount = 1000;
         $order->status = 'pending_payment';
         $order->save();
 
-        $gateway = new class implements PaymentGatewayInterface {
+        $gateway = new class implements PaymentGatewayInterface
+        {
             public int $chargeCount = 0;
 
             public function charge(
@@ -32,7 +33,7 @@ class PaymentIdempotencyTest extends TestCase
 
                 return [
                     'success' => true,
-                    'provider_transaction_id' => 'FAKE-' . $paymentNumber,
+                    'provider_transaction_id' => 'FAKE-'.$paymentNumber,
                 ];
             }
         };
