@@ -70,3 +70,36 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t mini-commerce:test .
+
+  deploy:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to DigitalOcean
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script_stop: true
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+
+            git pull origin main
+
+            docker run --rm \
+              -v "$PWD":/app \
+              composer:2 \
+              install \
+              --no-dev \
+              --optimize-autoloader \
+              --no-interaction \
+              --no-progress
+
+            docker compose up -d --build
+
+            docker compose exec -T app php artisan migrate --force
+
+            docker compose exec -T app php artisan optimize:clear      
